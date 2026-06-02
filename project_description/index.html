@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>SES :: Project 2</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="index_files/style.css">
+  <script type="text/javascript" src="index_files/MathJax.js"></script>
+<style type="text/css">.MathJax_Hover_Frame {border-radius: .25em; -webkit-border-radius: .25em; -moz-border-radius: .25em; -khtml-border-radius: .25em; box-shadow: 0px 0px 15px #83A; -webkit-box-shadow: 0px 0px 15px #83A; -moz-box-shadow: 0px 0px 15px #83A; -khtml-box-shadow: 0px 0px 15px #83A; border: 1px solid #A6D ! important; display: inline-block; position: absolute}
+.MathJax_Menu_Button .MathJax_Hover_Arrow {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px; font-family: 'Courier New',Courier; font-size: 9px; color: #F0F0F0}
+.MathJax_Menu_Button .MathJax_Hover_Arrow span {display: block; background-color: #AAA; border: 1px solid; border-radius: 3px; line-height: 0; padding: 4px}
+.MathJax_Hover_Arrow:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_Hover_Arrow:hover span {background-color: #CCC!important}
+</style><style type="text/css">#MathJax_About {position: fixed; left: 50%; width: auto; text-align: center; border: 3px outset; padding: 1em 2em; background-color: #DDDDDD; color: black; cursor: default; font-family: message-box; font-size: 120%; font-style: normal; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -khtml-border-radius: 15px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_About.MathJax_MousePost {outline: none}
+.MathJax_Menu {position: absolute; background-color: white; color: black; width: auto; padding: 5px 0px; border: 1px solid #CCCCCC; margin: 0; cursor: default; font: menu; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; z-index: 201; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -khtml-border-radius: 5px; box-shadow: 0px 10px 20px #808080; -webkit-box-shadow: 0px 10px 20px #808080; -moz-box-shadow: 0px 10px 20px #808080; -khtml-box-shadow: 0px 10px 20px #808080; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+.MathJax_MenuItem {padding: 1px 2em; background: transparent}
+.MathJax_MenuArrow {position: absolute; right: .5em; padding-top: .25em; color: #666666; font-size: .75em}
+.MathJax_MenuActive .MathJax_MenuArrow {color: white}
+.MathJax_MenuArrow.RTL {left: .5em; right: auto}
+.MathJax_MenuCheck {position: absolute; left: .7em}
+.MathJax_MenuCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuRadioCheck {position: absolute; left: .7em}
+.MathJax_MenuRadioCheck.RTL {right: .7em; left: auto}
+.MathJax_MenuLabel {padding: 1px 2em 3px 1.33em; font-style: italic}
+.MathJax_MenuRule {border-top: 1px solid #DDDDDD; margin: 4px 3px}
+.MathJax_MenuDisabled {color: GrayText}
+.MathJax_MenuActive {background-color: #606872; color: white}
+.MathJax_MenuDisabled:focus, .MathJax_MenuLabel:focus {background-color: #E8E8E8}
+.MathJax_ContextMenu:focus {outline: none}
+.MathJax_ContextMenu .MathJax_MenuItem:focus {outline: none}
+#MathJax_AboutClose {top: .2em; right: .2em}
+.MathJax_Menu .MathJax_MenuClose {top: -10px; left: -10px}
+.MathJax_MenuClose {position: absolute; cursor: pointer; display: inline-block; border: 2px solid #AAA; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; font-family: 'Courier New',Courier; font-size: 24px; color: #F0F0F0}
+.MathJax_MenuClose span {display: block; background-color: #AAA; border: 1.5px solid; border-radius: 18px; -webkit-border-radius: 18px; -moz-border-radius: 18px; -khtml-border-radius: 18px; line-height: 0; padding: 8px 0 6px}
+.MathJax_MenuClose:hover {color: white!important; border: 2px solid #CCC!important}
+.MathJax_MenuClose:hover span {background-color: #CCC!important}
+.MathJax_MenuClose:hover:focus {outline: none}
+</style><style type="text/css">.MathJax_Preview .MJXf-math {color: inherit!important}
+</style><style type="text/css">.MJX_Assistive_MathML {position: absolute!important; top: 0; left: 0; clip: rect(1px, 1px, 1px, 1px); padding: 1px 0 0 0!important; border: 0!important; height: 1px!important; width: 1px!important; overflow: hidden!important; display: block!important; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none}
+.MJX_Assistive_MathML.MJX_Assistive_MathML_Block {width: 100%!important}
+</style><style type="text/css">#MathJax_Zoom {position: absolute; background-color: #F0F0F0; overflow: auto; display: block; z-index: 301; padding: .5em; border: 1px solid black; margin: 0; font-weight: normal; font-style: normal; text-align: left; text-indent: 0; text-transform: none; line-height: normal; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box; box-shadow: 5px 5px 15px #AAAAAA; -webkit-box-shadow: 5px 5px 15px #AAAAAA; -moz-box-shadow: 5px 5px 15px #AAAAAA; -khtml-box-shadow: 5px 5px 15px #AAAAAA; filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true')}
+#MathJax_ZoomOverlay {position: absolute; left: 0; top: 0; z-index: 300; display: inline-block; width: 100%; height: 100%; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+#MathJax_ZoomFrame {position: relative; display: inline-block; height: 0; width: 0}
+#MathJax_ZoomEventTrap {position: absolute; left: 0; top: 0; z-index: 302; display: inline-block; border: 0; padding: 0; margin: 0; background-color: white; opacity: 0; filter: alpha(opacity=0)}
+</style><style type="text/css">.MathJax_Preview {color: #888}
+#MathJax_Message {position: fixed; left: 1px; bottom: 2px; background-color: #E6E6E6; border: 1px solid #959595; margin: 0px; padding: 2px 8px; z-index: 102; color: black; font-size: 80%; width: auto; white-space: nowrap}
+#MathJax_MSIE_Frame {position: absolute; top: 0; left: 0; width: 0px; z-index: 101; border: 0px; margin: 0px; padding: 0px}
+.MathJax_Error {color: #CC0000; font-style: italic}
+</style><style type="text/css">.MJXp-script {font-size: .8em}
+.MJXp-right {-webkit-transform-origin: right; -moz-transform-origin: right; -ms-transform-origin: right; -o-transform-origin: right; transform-origin: right}
+.MJXp-bold {font-weight: bold}
+.MJXp-italic {font-style: italic}
+.MJXp-scr {font-family: MathJax_Script,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-frak {font-family: MathJax_Fraktur,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-sf {font-family: MathJax_SansSerif,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-cal {font-family: MathJax_Caligraphic,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-mono {font-family: MathJax_Typewriter,'Times New Roman',Times,STIXGeneral,serif}
+.MJXp-largeop {font-size: 150%}
+.MJXp-largeop.MJXp-int {vertical-align: -.2em}
+.MJXp-math {display: inline-block; line-height: 1.2; text-indent: 0; font-family: 'Times New Roman',Times,STIXGeneral,serif; white-space: nowrap; border-collapse: collapse}
+.MJXp-display {display: block; text-align: center; margin: 1em 0}
+.MJXp-math span {display: inline-block}
+.MJXp-box {display: block!important; text-align: center}
+.MJXp-box:after {content: " "}
+.MJXp-rule {display: block!important; margin-top: .1em}
+.MJXp-char {display: block!important}
+.MJXp-mo {margin: 0 .15em}
+.MJXp-mfrac {margin: 0 .125em; vertical-align: .25em}
+.MJXp-denom {display: inline-table!important; width: 100%}
+.MJXp-denom > * {display: table-row!important}
+.MJXp-surd {vertical-align: top}
+.MJXp-surd > * {display: block!important}
+.MJXp-script-box > *  {display: table!important; height: 50%}
+.MJXp-script-box > * > * {display: table-cell!important; vertical-align: top}
+.MJXp-script-box > *:last-child > * {vertical-align: bottom}
+.MJXp-script-box > * > * > * {display: block!important}
+.MJXp-mphantom {visibility: hidden}
+.MJXp-munderover {display: inline-table!important}
+.MJXp-over {display: inline-block!important; text-align: center}
+.MJXp-over > * {display: block!important}
+.MJXp-munderover > * {display: table-row!important}
+.MJXp-mtable {vertical-align: .25em; margin: 0 .125em}
+.MJXp-mtable > * {display: inline-table!important; vertical-align: middle}
+.MJXp-mtr {display: table-row!important}
+.MJXp-mtd {display: table-cell!important; text-align: center; padding: .5em 0 0 .5em}
+.MJXp-mtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-mlabeledtr {display: table-row!important}
+.MJXp-mlabeledtr > .MJXp-mtd:first-child {padding-left: 0}
+.MJXp-mlabeledtr:first-child > .MJXp-mtd {padding-top: 0}
+.MJXp-merror {background-color: #FFFF88; color: #CC0000; border: 1px solid #CC0000; padding: 1px 3px; font-style: normal; font-size: 90%}
+.MJXp-scale0 {-webkit-transform: scaleX(.0); -moz-transform: scaleX(.0); -ms-transform: scaleX(.0); -o-transform: scaleX(.0); transform: scaleX(.0)}
+.MJXp-scale1 {-webkit-transform: scaleX(.1); -moz-transform: scaleX(.1); -ms-transform: scaleX(.1); -o-transform: scaleX(.1); transform: scaleX(.1)}
+.MJXp-scale2 {-webkit-transform: scaleX(.2); -moz-transform: scaleX(.2); -ms-transform: scaleX(.2); -o-transform: scaleX(.2); transform: scaleX(.2)}
+.MJXp-scale3 {-webkit-transform: scaleX(.3); -moz-transform: scaleX(.3); -ms-transform: scaleX(.3); -o-transform: scaleX(.3); transform: scaleX(.3)}
+.MJXp-scale4 {-webkit-transform: scaleX(.4); -moz-transform: scaleX(.4); -ms-transform: scaleX(.4); -o-transform: scaleX(.4); transform: scaleX(.4)}
+.MJXp-scale5 {-webkit-transform: scaleX(.5); -moz-transform: scaleX(.5); -ms-transform: scaleX(.5); -o-transform: scaleX(.5); transform: scaleX(.5)}
+.MJXp-scale6 {-webkit-transform: scaleX(.6); -moz-transform: scaleX(.6); -ms-transform: scaleX(.6); -o-transform: scaleX(.6); transform: scaleX(.6)}
+.MJXp-scale7 {-webkit-transform: scaleX(.7); -moz-transform: scaleX(.7); -ms-transform: scaleX(.7); -o-transform: scaleX(.7); transform: scaleX(.7)}
+.MJXp-scale8 {-webkit-transform: scaleX(.8); -moz-transform: scaleX(.8); -ms-transform: scaleX(.8); -o-transform: scaleX(.8); transform: scaleX(.8)}
+.MJXp-scale9 {-webkit-transform: scaleX(.9); -moz-transform: scaleX(.9); -ms-transform: scaleX(.9); -o-transform: scaleX(.9); transform: scaleX(.9)}
+.MathJax_PHTML .noError {vertical-align: ; font-size: 90%; text-align: left; color: black; padding: 1px 3px; border: 1px solid}
+</style></head>
+<body><div id="MathJax_Message" style="display: none;"></div>
+<header id="title-block-header">
+<h1 class="title">SES :: Project 2</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#pwm" id="toc-pwm">2. PWM</a>
+<ul>
+<li><a href="#description" id="toc-description">2.1.
+Description</a></li>
+<li><a href="#the-code" id="toc-the-code">2.2. The code</a></li>
+<li><a href="#introduced-bugs-and-safe-version" id="toc-introduced-bugs-and-safe-version">2.3. Introduced bugs and “safe
+version”</a></li>
+<li><a href="#illustration-of-usage" id="toc-illustration-of-usage">2.4.
+Illustration of usage</a></li>
+</ul></li>
+<li><a href="#detecting-and-fixing-bugs" id="toc-detecting-and-fixing-bugs">3. Detecting and fixing bugs</a>
+<ul>
+<li><a href="#unit-tests-for-userpassword-validation" id="toc-unit-tests-for-userpassword-validation">3.1. Unit tests for
+user/password validation</a></li>
+<li><a href="#issues-reported-by-the-clang-static-analyzer-and-gcc-compiler" id="toc-issues-reported-by-the-clang-static-analyzer-and-gcc-compiler">3.2.
+Issues reported by the clang static analyzer and GCC compiler</a></li>
+<li><a href="#fuzzing" id="toc-fuzzing">3.3. Fuzzing</a></li>
+</ul></li>
+<li><a href="#additional-challenges" id="toc-additional-challenges">4.
+Additional challenges</a>
+<ul>
+<li><a href="#design-vulnerabilities" id="toc-design-vulnerabilities">4.1. Design vulnerabilities</a></li>
+<li><a href="#stack-smashing-challenge" id="toc-stack-smashing-challenge">4.2. Stack smashing challenge</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><strong>Author: <a href="https://www.dcc.fc.up.pt/~edrdo/">Eduardo R.
+B. Marques</a>, DCC/FCUP</strong></p>
+<p><strong><a href="https://moodle2526.up.pt/course/view.php?id=5479">SES Moodle
+page</a></strong></p>
+<h2 id="introduction">1. Introduction</h2>
+<p>The goal of this project is to test the reliability and security of a
+small C application — a password manager. To that end, static analyzers,
+unit tests, fuzzers, and runtime sanitizers will be employed.
+<!-- A Docker image is provided for carrying out the work.
+__Instructions on how to use the various tools (Maven, SpotBugs, ZAP, and sqlmap) are provided in a separate document.__
+ --></p>
+<p><strong>This project accounts for 4 / 20 of the final
+grade.</strong></p>
+<h4 id="deadline">Deadline</h4>
+<p>June 5</p>
+<h4 id="submission-instructions">Submission instructions</h4>
+<p>You will have to submit a PDF report and the modified source code.
+The following guidelines should be followed for the PDF report:</p>
+<ul>
+<li>it can be written in Portuguese or English;</li>
+<li>it should be organized in sections and have 10 pages at most,
+including any figures, code listings and tables;</li>
+<li>references to external sources (e.g., web pages, books, articles)
+should be included in a final references section;</li>
+<li>figures, tables and code listings should be numbered and referenced
+in the text;</li>
+<li>the font size for normal text should be 10 pt.</li>
+</ul>
+<p>A Moodle submission form will be available closer to the
+deadline.</p>
+<h4 id="setup-instructions">Setup instructions</h4>
+<p>Download the ZIP archive with the code from Moodle, and follow the
+instructions in this document. You should be able to work on the project
+using Google Cloud Shell or a Linux machine.</p>
+<h2 id="pwm">2. PWM</h2>
+<h3 id="description">2.1. Description</h3>
+<p><code>pwm</code> is a rudimentary (and insecure!) password file
+manager, with a format somewhat similar to but simpler than the <a href="https://linux.die.net/man/5/shadow"><code>/etc/shadow</code></a>
+file on Linux systems. An example password file is as follows:</p>
+<pre><code>admin:68ce6c40:f699d9208839b227a050ce73c8558662
+steve:d28d18a9:3b7ac81dfd7bcb735cd0bc596f821afc
+linus:02279492:d57aef52733f7ea2fa9f08cd7c44c0ed
+edrdo:64507481:8ba7a666b19c26b302db038d093eaae7</code></pre>
+<p>Each line has 3 fields:</p>
+<ul>
+<li>the user ID;</li>
+<li>a 4-byte salt obtained from <code>/dev/urandom</code>;</li>
+<li>and an MD5 checksum generated from the salt and the user’s
+password.</li>
+</ul>
+<p>The <code>admin</code> user that appears on the first line (in
+principle!) is special: subsequent openings of the file require
+confirmation of this user’s password, and this user cannot be deleted
+(supposedly!).</p>
+<h3 id="the-code">2.2. The code</h3>
+<p>The source code is located in the top directory.</p>
+<p>Before you compile it, make sure the BSD library functions are
+installed:</p>
+<pre><code>sudo apt install libbsd-dev</code></pre>
+<p>Then, to compile the code, run:</p>
+<pre><code>make clean all</code></pre>
+<p>The code is compiled by GCC in debug mode, allowing you to use the <a href="https://www.gnu.org/software/gdb/">gdb</a> debugger if desired,
+and instrumented for fault detection via the <a href="https://clang.llvm.org/docs/AddressSanitizer.html">AddressSanitizer</a>
+sanitizer.
+<!-- A white-box fuzzing program using [libFuzzer](http://llvm.org/docs/LibFuzzer.html) is also provided. --></p>
+<p>The code is organized into several files:</p>
+<table>
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr>
+<th>File</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pwm.h</code></td>
+<td>header file with type and function declarations</td>
+</tr>
+<tr>
+<td><code>pwm.c</code></td>
+<td>program’s entry point (the <code>main</code> function)</td>
+</tr>
+<tr>
+<td><code>commands.c</code></td>
+<td>handling of commands entered by the user</td>
+</tr>
+<tr>
+<td><code>core.c</code></td>
+<td>core functions for password file manipulation</td>
+</tr>
+<tr>
+<td><code>validation.c</code></td>
+<td>validation functions for checking valid usernames and passwords
+accepted by the system</td>
+</tr>
+<tr>
+<td><code>utils.c</code></td>
+<td>utility functions such as input handling, salt generation, and MD5
+hash computation for passwords</td>
+</tr>
+<tr>
+<td><code>md5.c</code></td>
+<td>RSA code for MD5 checksum computation, slightly adapted</td>
+</tr>
+</tbody>
+</table>
+<p>A small set of C library functions is used. The main ones used are
+for:</p>
+<ul>
+<li>string manipulation: <code>strcmp</code>, <code>strcpy</code>,
+<code>strchr</code>, …;</li>
+<li>byte sequence copy/comparison: <code>memcpy</code>,
+<code>memcmp</code>;</li>
+<li>dynamic memory allocation: <code>malloc</code>, <code>free</code>,
+<code>strdup</code>;</li>
+<li>I/O: <code>gets</code>, <code>fgets</code>, <code>fopen</code>,
+<code>fclose</code>, <code>fprintf</code>, … .</li>
+</ul>
+<h3 id="introduced-bugs-and-safe-version">2.3. Introduced bugs and “safe
+version”</h3>
+<p>A number of faults (source code defects) have been deliberately
+introduced into <code>pwm</code>, some of which constitute security
+vulnerabilities, including:</p>
+<ul>
+<li>logical programming errors in the validation of usernames and
+passwords, to be identified through unit tests (see separate
+section);</li>
+<li>use of insecure C library functions;</li>
+<li>improper heap memory management leading to use-after-free,
+double-free, and memory leak cases;</li>
+<li>other logical programming errors.</li>
+</ul>
+<p>A “safe version” without deliberately introduced faults is the binary
+program <code>pwmsafe</code>. It is provided without debug information
+and you may run it in Google Cloud Shell to understand what is the
+expected behavior of <code>pwm</code>.</p>
+<h3 id="illustration-of-usage">2.4. Illustration of usage</h3>
+<p>Executing the program interactively, you may issue commands. The
+<code>help</code> command lists the available options. You can also
+execute <code>help &lt;cmd&gt;</code> to get the description of a
+specific command.</p>
+<details>
+<summary>
+Illustration
+</summary>
+<pre><code>PWM command (e.g. 'help') [1]: help
+&gt;&gt; Command: 'help' [ ]
+Available commands:
+  init &lt;file&gt; &lt;admin-pass&gt; : initialize PWM data (without saving to file)
+  open &lt;file&gt; &lt;admin-pass&gt;: open PWM file supplying admin password.
+  save : save PWM data to file.
+  clear: clear all PWM data in memory (all changes lost)
+  add &lt;user&gt; &lt;pass&gt; : add user/password pair
+  delete &lt;user&gt; : delete user
+  update &lt;user&gt; &lt;pass&gt; : update password for user
+  check &lt;user&gt; &lt;pass&gt; : check that password is correct for user
+  list PWM entries
+  quit : quits the program
+  help [&lt;cmd&gt;]: displays this message or help for specific command
+&lt;&lt; 'help' -- success.
+PWM command (e.g. 'help') [2]: help add
+&gt;&gt; Command: 'help' [ 'add' ]
+  add &lt;user&gt; &lt;pass&gt; : add user/password pair
+&lt;&lt; 'help' -- success.</code></pre>
+</details>
+<p>The following is a sample run of <code>pwmsafe</code><br>
+that produces a password file like the one at the beginning of this
+section.</p>
+<details>
+<summary>
+Example execution
+</summary>
+<pre><code>PWM command (e.g. 'help') [1]: init passfile.txt Qses1920!
+&gt;&gt; Command: 'init' [ 'passfile.txt' 'Qses1920!' ]
+&lt;&lt; 'init' -- success.
+PWM command (e.g. 'help') [2]: add bill Gates!0
+&gt;&gt; Command: 'add' [ 'bill' 'Gates!0' ]
+&lt;&lt; 'add' -- success.
+PWM command (e.g. 'help') [3]: add steve sb0J.Mac
+&gt;&gt; Command: 'add' [ 'steve' 'sb0J.Mac' ]
+&lt;&lt; 'add' -- success.
+PWM command (e.g. 'help') [4]: add linus T0rvalds
+&gt;&gt; Command: 'add' [ 'linus' 'T0rvalds' ]
+&lt;&lt; 'add' -- success.
+PWM command (e.g. 'help') [5]: add edrdo inv_pass
+&gt;&gt; Command: 'add' [ 'edrdo' 'inv_pass' ]
+PWM error! Invalid password 'inv_pass'!
+&lt;&lt; 'add' -- failure (error code 8) !
+PWM command (e.g. 'help') [6]: add edrdo Zxy199. 
+&gt;&gt; Command: 'add' [ 'edrdo' 'Zxy199.' ]
+&lt;&lt; 'add' -- success.
+PWM command (e.g. 'help') [7]: add edrdo ZZZZ1x9
+&gt;&gt; Command: 'add' [ 'edrdo' 'ZZZZ1x9' ]
+PWM error! User 'edrdo' already exists!
+&lt;&lt; 'add' -- failure (error code 6) !
+PWM command (e.g. 'help') [8]: update edrdo ZZZZ1x9
+&gt;&gt; Command: 'update' [ 'edrdo' 'ZZZZ1x9' ]
+&lt;&lt; 'update' -- success.
+PWM command (e.g. 'help') [9]: delete bill
+&gt;&gt; Command: 'delete' [ 'bill' ]
+&lt;&lt; 'delete' -- success.
+PWM command (e.g. 'help') [10]: save
+&gt;&gt; Command: 'save' [ ]
+&lt;&lt; 'save' -- success.
+PWM command (e.g. 'help') [11]: quit
+&gt;&gt; Command: 'quit' [ ]
+&lt;&lt; 'quit' -- success.</code></pre>
+</details>
+<p>A subsequent run may use the previously generated file.</p>
+<details>
+<summary>
+Using the same file
+</summary>
+<pre><code>PWM command (e.g. 'help') [1]: open passfile.txt Qses1920!
+&gt;&gt; Command: 'open' [ 'passfile.txt' 'Qses1920!' ]
+&lt;&lt; 'open' -- success.
+PWM command (e.g. 'help') [2]: list
+&gt;&gt; Command: 'list' [ ]
+admin:68ce6c40:f699d9208839b227a050ce73c8558662
+steve:d28d18a9:3b7ac81dfd7bcb735cd0bc596f821afc
+linus:02279492:d57aef52733f7ea2fa9f08cd7c44c0ed
+edrdo:64507481:8ba7a666b19c26b302db038d093eaae7
+4 users
+&lt;&lt; 'list' -- success.
+PWM command (e.g. 'help') [3]: clear
+&gt;&gt; Command: 'clear' [ ]
+&lt;&lt; 'clear' -- success.
+PWM command (e.g. 'help') [4]: quit
+&gt;&gt; Command: 'quit' [ ]
+&lt;&lt; 'quit' -- success.</code></pre>
+</details>
+<p>Finally, note that a file containing commands may also be passed as
+an argument.</p>
+<details>
+<summary>
+Execution passing command file as argument
+</summary>
+<pre><code>$ cat example.txt
+init passfile.txt Qses1920!
+add bill Gates!0
+add steve sb0J.Mac
+add linus T0rvalds
+add edrdo inv_pass
+add edrdo Zxy199.
+add edrdo ZZZZ1x9
+update edrdo ZZZZ1x9
+delete bill
+list
+save
+quit
+
+$ ./pwm example.txt
+...</code></pre>
+</details>
+<h2 id="detecting-and-fixing-bugs">3. Detecting and fixing bugs</h2>
+<p>The aim is to try to uncover and fix bugs in different ways:</p>
+<ol type="1">
+<li>We first make use of unit tests to uncover bugs in rules for user
+name and password validation (<code>pwm/validation.c</code> file).</li>
+<li>We then deal with issues reported by the clang static analyzer.</li>
+<li>We finally make use of fuzzing to uncover more bugs.</li>
+</ol>
+<h3 id="unit-tests-for-userpassword-validation">3.1. Unit tests for
+user/password validation</h3>
+<h4 id="the-code-1">The code</h4>
+<p>See <code>pwm/validation.c</code> for the validation code in the
+functions <code>pwm_is_valid_user</code> and
+<code>pwm_is_valid_password</code>.</p>
+<h4 id="the-rules">The rules</h4>
+<p>A username should be considered valid by
+<code>pwm_is_valid_user</code> if:</p>
+<ol type="1">
+<li>It is between 4 and 10 characters long.</li>
+<li>It consists <em>only</em> of lowercase letters: <code>'a'</code> to
+<code>'z'</code>.</li>
+</ol>
+<p>A password should be considered valid by
+<code>pwm_is_valid_password</code> if (the constraints are not
+particularly strong!):</p>
+<ol type="1">
+<li>It is between 6 and 12 characters long.</li>
+<li>It contains <strong>at least one</strong> lowercase letter —
+<code>a</code> to <code>z</code>.</li>
+<li>It contains <strong>at least one</strong> uppercase letter —
+<code>A</code> to <code>Z</code>.</li>
+<li>It contains <strong>at least one</strong> digit — <code>0</code> to
+<code>9</code>.</li>
+<li>It contains <strong>at most one</strong> of the following
+punctuation characters: <code>. , : ! ?</code>.</li>
+<li>It does not contain any subsequence found in a (small) blacklist
+(see source code).</li>
+</ol>
+<h4 id="running-the-tests">Running the tests</h4>
+<p>In the <code>gtest</code> directory you will find
+<code>testuser.cpp</code> and <code>testpass.cpp</code>, which encode
+unit tests for <code>pwm_is_valid_user</code> and
+<code>pwm_is_valid_password</code>, respectively. The tests are
+structured using the <a href="https://github.com/abseil/googletest/blob/master/googletest/docs/primer.md">Google
+Test</a> framework, and code coverage reports are generated by the <a href="https://gcc.gnu.org/onlinedocs/gcc/Gcov.html">gcov</a> tool.</p>
+<p>In the <code>library</code> folder you will find a compiled version
+of the GoogleTest library. This should work on the Google Cloud Shell
+machine. If you use your computer, it is advisable to compile for your
+machine using the <code>install-gtest.sh</code> script.</p>
+<details>
+<summary>
+Installing gtest if necessary
+</summary>
+<pre><code>$ ./install-gtest.sh
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  864k  100  864k    0     0  2922k      0 --:--:-- --:--:-- --:--:-- 2922k
+-- The C compiler identification is GNU 13.3.0
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting C compiler ABI info
+...
+-- Configuring done (0.6s)
+-- Generating done (0.0s)
+-- Build files have been written to: /tmp/googletest-1.17.0/build
+[ 12%] Building CXX object googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o
+[ 25%] Linking CXX static library ../lib/libgtest.a
+...
+[100%] Built target gtest_main
+Install the project...
+-- Install configuration: ""
+...
+-- Installing: /home/eduardorbmarques/ses2526/ses_project2/sesp2/gtest/library/lib/libgmock.a
+-- Installing: /home/eduardorbmarques/ses2526/ses_project2/sesp2/gtest/library/lib/libgmock_main.a
+-- Installing: /home/eduardorbmarques/ses2526/ses_project2/sesp2/gtest/library/lib/pkgconfig/gmock.pc
+-- Installing: /home/eduardorbmarques/ses2526/ses_project2/sesp2/gtest/library/lib/pkgconfig/gmock_main.pc
+...</code></pre>
+</details>
+<p>Running <code>make</code> will (re)compile (if necessary) and execute
+the tests, producing:</p>
+<ol type="1">
+<li><p>Details about the test run, identifying tests that passed and
+those that failed.</p></li>
+<li><p>A file <code>validation.c.gcov</code> with the test coverage
+analysis.</p></li>
+</ol>
+<details>
+<summary>
+Test execution illustration
+</summary>
+<pre><code>$ cd gtest
+$ make
+[==========] Running 4 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 4 tests from test_user
+[ RUN      ] test_user.short_length
+[       OK ] test_user.short_length (0 ms)
+[ RUN      ] test_user.invalid_char
+testuser.cpp:11: Failure
+Expected equality of these values:
+  PWM_INVALID_USER_ID
+    Which is: 7
+  pwm_is_valid_user("@rui")
+    Which is: 0
+[  FAILED  ] test_user.invalid_char (0 ms)
+[ RUN      ] test_user.valid_user
+testuser.cpp:15: Failure
+Expected equality of these values:
+  PWM_OK
+    Which is: 0
+  pwm_is_valid_user("ruiruiruir")
+    Which is: 7
+[  FAILED  ] test_user.valid_user (0 ms)
+[ RUN      ] test_user.valid_user2
+[       OK ] test_user.valid_user2 (0 ms)
+[----------] 4 tests from test_user (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 1 test suite ran. (1 ms total)
+[  PASSED  ] 2 tests.
+[  FAILED  ] 2 tests, listed below:
+[  FAILED  ] test_user.invalid_char
+[  FAILED  ] test_user.valid_user
+
+ 2 FAILED TESTS
+[==========] Running 4 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 4 tests from test_pass
+[ RUN      ] test_pass.invalid_pass_length5
+[       OK ] test_pass.invalid_pass_length5 (0 ms)
+[ RUN      ] test_pass.valid_pass_length6
+testpass.cpp:11: Failure
+Expected equality of these values:
+  PWM_OK
+    Which is: 0
+  pwm_is_valid_password("Aa9za1")
+    Which is: 8
+[  FAILED  ] test_pass.valid_pass_length6 (2 ms)
+[ RUN      ] test_pass.invvalid_pass_with_two_punct
+testpass.cpp:15: Failure
+Expected equality of these values:
+  PWM_INVALID_PASSWORD
+    Which is: 8
+  pwm_is_valid_password("Aa9za1!!")
+    Which is: 0
+[  FAILED  ] test_pass.invvalid_pass_with_two_punct (1 ms)
+[ RUN      ] test_pass.blacklisted_pass1
+testpass.cpp:19: Failure
+Expected equality of these values:
+  PWM_INVALID_PASSWORD
+    Which is: 8
+  pwm_is_valid_password("A123zad!")
+    Which is: 0
+[  FAILED  ] test_pass.blacklisted_pass1 (1 ms)
+[----------] 4 tests from test_pass (6 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 1 test suite ran. (7 ms total)
+[  PASSED  ] 1 test.
+[  FAILED  ] 3 tests, listed below:
+[  FAILED  ] test_pass.valid_pass_length6
+[  FAILED  ] test_pass.invvalid_pass_with_two_punct
+[  FAILED  ] test_pass.blacklisted_pass1
+
+ 3 FAILED TESTS
+File '../validation.c'
+Lines executed:83.64% of 55
+Branches executed:90.91% of 44
+Taken at least once:65.91% of 44
+No calls
+../validation.c:creating 'validation.c.gcov'</code></pre>
+</details>
+<h4 id="writing-new-tests-and-fixing-bugs">Writing new tests and fixing
+bugs</h4>
+<p>The goal is to write tests that identify bugs in the source code of
+the user and password validation functions, while also achieving 100%
+branch coverage. Describe in your report the defects you found and the
+code changes you made to ensure correct behavior of
+<code>pwm_is_valid_user</code> and
+<code>pwm_is_valid_password</code>.</p>
+<p>In summary:</p>
+<ol type="1">
+<li><p>Inspect the errors produced by the failing tests in
+<code>testuser.cpp</code> and <code>testpass.cpp</code> and investigate
+what problems may exist in the code (also make sure the tests themselves
+are correctly written!). Fix the code.</p></li>
+<li><p>Write tests to achieve 100% branch coverage in
+<code>pwm_is_valid_user</code> and <code>pwm_is_valid_password</code>.
+You should add tests to improve coverage and possibly discover more
+bugs.</p></li>
+<li><p>In the report, explain what bugs have been fixed and what extra
+tests you had to include to attain 100% branch coverage.</p></li>
+</ol>
+<h3 id="issues-reported-by-the-clang-static-analyzer-and-gcc-compiler">3.2.
+Issues reported by the clang static analyzer and GCC compiler</h3>
+<p>The code may be analyzed by the clang static analyzer. To avoid
+installation of clang, a report of the issues can be found <a href="https://moodle2526.up.pt/pluginfile.php/293316/mod_resource/content/8/clang-static-analysis/index.html">here</a>. Furthermore the
+compilation using GCC reports a number of warnings (most of which are
+also reported by the clang static analyzer).</p>
+<details>
+<summary>
+GCC compilation warnings
+</summary>
+<pre><code>commands.c: In function ‘pwm_handle_command’:
+commands.c:71:6: warning: format not a string literal and no format arguments [-Wformat-security]
+   71 |      printf(command_args[j]);
+      |      ^~~~~~
+----
+core.c: In function ‘pwm_alloc’:
+core.c:44:5: warning: pointer ‘pwm’ used after ‘free’ [-Wuse-after-free]
+   44 |     free(pwm);
+      |     ^~~~~~~~~
+core.c:41:5: note: call to ‘free’ here
+   41 |     free(pwm);
+      |     ^~~~~~~~~
+---
+... /pwm/commands.c:261:(.text+0x16de): warning: the `gets' function is dangerous and should not be used.</code></pre>
+</details>
+<p>For the reported issues do the following:</p>
+<ol type="1">
+<li><p>Explain in the report why the code is sensitive in terms of
+security and/or reliability, and how during execution there may be a
+problem causing a sanitizer crash and/or some other type of
+error.</p></li>
+<li><p>Fix the code to correct the issue. Mention what you did in the
+report.</p></li>
+</ol>
+<h3 id="fuzzing">3.3. Fuzzing</h3>
+<p>Can fuzzing help us discover more vulnerabilities? Consider the use
+of black-box fuzzing using the <a href="https://gitlab.com/akihe/blab">blab</a> and <a href="https://gitlab.com/akihe/radamsa">radamsa</a> tools. Inside the
+<code>fuzzing</code> directory you will find the source code of both
+tools and some auxiliary files.</p>
+<h4 id="compiling-blab-and-radamsa">Compiling blab and radamsa</h4>
+<p>In the <code>fuzzing</code> directory execute <code>make</code> to
+compile blab and radamsa.</p>
+<details>
+<summary>
+Compilation of blab and radamsa
+</summary>
+<pre><code>$ cd fuzzing
+$ make
+gcc -Wall -std=c11 -D_XOPEN_SOURCE=500 -D_GNU_SOURCE -g -g -fsanitize=address   -c -o blab.o blab.c
+gcc -fsanitize=address  blab.o  -o blab
+gcc -Wall -std=c11 -D_XOPEN_SOURCE=500 -D_GNU_SOURCE -g -g -fsanitize=address   -c -o radamsa.o radamsa.c
+gcc -fsanitize=address  radamsa.o  -o radamsa</code></pre>
+</details>
+<h4 id="generating-input-files-using-blab-and-radamsa">Generating input
+files using blab and radamsa</h4>
+<p>For illustration, two scripts are provided — <code>gblab.sh</code>
+and <code>gradamsa.sh</code> — along with the <code>grammar.blab</code>
+grammar for blab. Adapt these resources as you see fit. In particular,
+to make the examples generated by blab more representative and larger in
+size, you should extend/adapt the grammar in
+<code>grammar.blab</code>.</p>
+<details>
+<summary>
+Example usage for blab
+</summary>
+<pre><code>$ ./gblab.sh 
+Running blab - see inputs dir for generated files
+$ ls inputs
+blab1.txt   blab2.txt  blab4.txt  blab6.txt  blab8.txt
+blab10.txt  blab3.txt  blab5.txt  blab7.txt  blab9.txt
+$ cat inputs/blab1.txt
+help delete
+init password.txt Qses1920
+add edward ZZ34567890129
+add admin 123456789012
+add charlesf abcdef.e
+add charlesf y12!3456
+add charles Zz3456789012
+list
+clear
+quit</code></pre>
+</details>
+<details>
+<summary>
+Example usage for radamsa
+</summary>
+<pre><code>$ ./gradamsa.sh seeds/blab*.txt
+Transforming given files using radamsa
+seeds/blab1.txt.rad generated
+seeds/blab10.txt.rad generated
+seeds/blab2.txt.rad generated
+seeds/blab3.txt.rad generated
+seeds/blab4.txt.rad generated
+seeds/blab5.txt.rad generated
+seeds/blab6.txt.rad generated
+seeds/blab7.txt.rad generated
+seeds/blab8.txt.rad generated
+seeds/blab9.txt.rad generated
+$ diff inputs/blab1.txt inputs/blab1.txt.rad 
+2,4c2,4
+&lt; init password.txt Qses1920
+&lt; add edward ZZ34567890129
+&lt; add admin 123456789012
+---
+&gt; init password.txt Qses-1040149
+&gt; add edward ZZ34570882392
+&gt; add admin 129</code></pre>
+</details>
+<h4 id="running-the-fuzzing-script">Running the fuzzing script</h4>
+<p>The <code>fuzzpwm.sh</code> script can be used to execute
+<code>pwm</code> for a number of input files, detect program crashes for
+the executions, and gather coverage information.</p>
+<ol type="1">
+<li>It takes one or more input files as arguments, for instance
+<code>./fuzzpwm.sh inputs/blab1.txt</code> or
+<code>./fuzzpwm.sh inputs/*</code></li>
+<li>It runs <code>pwm</code> for each input <code>f</code>, warning of
+possible program crash. For file <code>f</code> output files can be
+found in <code>outputs/f.out</code> and <code>outputs/f.err</code>.</li>
+<li>At the end, coverage information will be derived accounting for all
+executions. Coverage information files can be found in the
+<code>coverage</code> directory.</li>
+</ol>
+<details>
+<summary>
+Example execution
+</summary>
+<pre><code>$ ./fuzzpwm.sh inputs/blab1.txt inputs/blab2.txt
+--- Cleaning up previous execution files ...
+--- Fuzzing ...
+Executing pwm for input file inputs/blab1.txt
+Possible program crash for inputs/blab1.txt - see outputs/blab1.txt.out + outputs/blab1.txt.err for more information
+Executing pwm for input file inputs/blab2.txt
+Possible program crash for inputs/blab2.txt - see outputs/blab2.txt.out + outputs/blab2.txt.err for more information
+--- Done ... 2 possible program crashes in 2 executions
+--- Deriving coverage information ...
+File 'commands.c'
+Lines executed:66.44% of 149
+Branches executed:83.87% of 62
+Taken at least once:56.45% of 62
+Calls executed:66.67% of 54
+Creating 'commands.c.gcov'
+
+File 'core.c'
+Lines executed:27.96% of 186
+Branches executed:29.27% of 82
+Taken at least once:18.29% of 82
+Calls executed:22.39% of 67
+Creating 'core.c.gcov'
+
+File 'md5.c'
+Lines executed:98.41% of 126
+Branches executed:100.00% of 16
+Taken at least once:81.25% of 16
+Calls executed:92.31% of 13
+Creating 'md5.c.gcov'
+
+File 'pwm.c'
+Lines executed:75.00% of 8
+Branches executed:100.00% of 4
+Taken at least once:50.00% of 4
+Calls executed:66.67% of 3
+Creating 'pwm.c.gcov'
+
+File 'utils.c'
+Lines executed:65.62% of 64
+Branches executed:57.14% of 28
+Taken at least once:39.29% of 28
+Calls executed:100.00% of 15
+Creating 'utils.c.gcov'
+
+File 'validation.c'
+Lines executed:88.64% of 44
+Branches executed:90.91% of 44
+Taken at least once:68.18% of 44
+No calls
+Creating 'validation.c.gcov'
+
+Lines executed:62.74% of 577
+coverage/commands.c.gcov  coverage/md5.c.gcov  coverage/utils.c.gcov
+coverage/core.c.gcov      coverage/pwm.c.gcov  coverage/validation.c.gcov</code></pre>
+</details>
+<p>The coverage information can help identify which parts of the code
+are not being reached by the fuzzer, and motivate the manual addition or
+automatic generation of a larger number and more meaningful inputs.</p>
+<h4 id="identifying-and-fixing-vulnerabilities">Identifying and fixing
+vulnerabilities</h4>
+<p>Using <code>fuzzpwm.sh</code>, several vulnerabilities in
+<code>pwm</code> may manifest. For each such problematic input, you
+should attempt to identify the problem in the source code and fix it. In
+your report:</p>
+<ul>
+<li>identify each of the issues;</li>
+<li>describe what type of inputs cause it to manifest (not the entire
+input file, but the specific sequence that leads to a crash);</li>
+<li>and explain how you fixed the code.</li>
+</ul>
+<h2 id="additional-challenges">4. Additional challenges</h2>
+<h3 id="design-vulnerabilities">4.1. Design vulnerabilities</h3>
+<p>We are considering a very simple and vulnerable password manager.
+Consider the following problems:</p>
+<ol type="1">
+<li><p>Note that an adversary (assuming they have write access to the
+password file) could remove or alter the position of the
+<code>admin</code> user’s entry in a password file without
+<code>pwm</code> noticing. Explain why and how an adversary could
+exploit this vulnerability. Modify the <code>pwm_open</code> function to
+fix this design flaw.</p></li>
+<li><p>Similarly, an adversary with limited technical knowledge could
+duplicate a line in the file and change only the username to obtain a
+password equivalent to that of the original user (who may have a known
+password). This happens because the MD5 checksum only takes into account
+the salt and the password, but not the username. Generalize
+<code>pwm_hash_password</code> in <code>utils.c</code> to address this,
+and modify the program’s logic at other points as needed.</p></li>
+<li><p>Even after fixing the issues above, nothing prevents arbitrary
+tampering with the file in order to freely manipulate users and
+passwords, or to corrupt it. Do you have any proposals for addressing
+this problem? Explain in the report the general principles of what you
+propose. You are not required to implement your proposal (though you can
+also do it!).</p></li>
+</ol>
+<h3 id="stack-smashing-challenge">4.2. Stack smashing challenge</h3>
+<p>Preserve or restore the <code>gets</code> calls and the format string
+vulnerability detected by the static analysis (in <strong>3.2</strong>).
+Explain how these vulnerabilities can be exploited in stack-smashing
+attacks to improperly obtain a shell. Additionally, you should try to
+implement the attacks concretely.</p>
+<p>For this purpose, you may find several files and utilities in the
+<code>pwm/ss</code> directory similar to those used in the lab
+class.</p>
+<ul>
+<li><p>To compile <code>pwm</code> and other auxiliary programs in the
+<code>ss</code> directory, use:</p>
+<pre><code>make clean all [OPTIONS]</code></pre></li>
+</ul>
+<p>where the optional <code>OPTIONS</code> arguments can enable
+different types of protection for the <code>pwm</code> executable,
+<strong>all disabled by default</strong>:</p>
+<ul>
+<li><p><code>CANARIES=1</code>: enables the use of stack
+canaries;</p></li>
+<li><p><code>NOXSTACK=1</code>: disables executable code on the
+stack;</p></li>
+<li><p><code>PIE=1</code>: enables PIE code;</p></li>
+<li><p>In a Linux machine, you should also disable ASLR, for instance
+using</p></li>
+</ul>
+<pre><code>echo 0 | sudo tee /proc/sys/kernel/randomize_va_space</code></pre>
+<p>In case you have no root access to do that, use the
+<code>nr.sh</code> script to disable ASLR, for example:</p>
+<pre><code>./nr.sh ./pwm</code></pre>
+<ul>
+<li>A simple <code>hello</code> program is also provided in case you
+wish to test stack-smashing.</li>
+</ul>
+
+
+</body></html>
