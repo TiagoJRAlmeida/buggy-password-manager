@@ -21,13 +21,16 @@ pwm_res_t pwm_is_valid_user(const char *user) {
   int i;
   char c;
   // NOTE: Not concistent with how password bounds are checked.
-  if (len >= PWM_MIN_USER_ID_LEN && len < PWM_MAX_USER_ID_LEN) {
+  // if (len >= PWM_MIN_USER_ID_LEN && len < PWM_MAX_USER_ID_LEN) {
+  if (len >= PWM_MIN_USER_ID_LEN && len <= PWM_MAX_USER_ID_LEN) {
     // NOTE: Index starting at 1.
-    for (i = 1; i < len; i++) {
+    // for (i = 1; i < len; i++) {
+    for (i = 0; i < len; i++) {
       c = user[i];
       // NOTE: It should be ( ... || c > 'z'), not >=.
       // Otherwise the 'z' character wwill be considered invalid.
-      if (c < 'a' || c >= 'z') {
+      // if (c < 'a' || c >= 'z') {
+      if (c < 'a' || c > 'z') {
         break;
       }
     }
@@ -64,13 +67,15 @@ pwm_res_t pwm_is_valid_password(const char *password) {
   // Length check
   // NOTE: If it's the same logic as with pwm_is_valid_user, it should be
   // len < PWM_MIN_PASSWORD_LEN, not <=
-  if (len <= PWM_MIN_PASSWORD_LEN || len >= PWM_MAX_PASSWORD_LEN) {
+  // if (len <= PWM_MIN_PASSWORD_LEN || len >= PWM_MAX_PASSWORD_LEN) {
+  if (len < PWM_MIN_PASSWORD_LEN || len > PWM_MAX_PASSWORD_LEN) {
     return PWM_INVALID_PASSWORD;
   }
 
   // Black-list check
-  // NOTE: Starting on index 1. Possible bug?
-  for (int i = 1; i < BLACK_LIST_SIZE; i++) {
+  // NOTE: Starting on index 1.
+  // for (int i = 1; i < BLACK_LIST_SIZE; i++) {
+  for (int i = 0; i < BLACK_LIST_SIZE; i++) {
     // NOTE: Looks for the substring black listed inside the password,
     // ignoring the case and the null byte (\0)
     if (strcasestr(password, BLACK_LIST[i]) != 0) {
@@ -85,20 +90,26 @@ pwm_res_t pwm_is_valid_password(const char *password) {
   // p = Especial Char Count
   int u = 0, l = 0, d = 0, p = 0;
 
-  for (int i = 0; i <= len; i++) {
+  // NOTE: Should be i < len, not i <= len
+  // for (int i = 0; i <= len; i++) {
+  for (int i = 0; i < len; i++) {
     char c = password[i];
     if (c >= 'a' && c <= 'z') {
       l++;
     } else if (c >= 'A' && c <= 'Z') {
       u++;
-    } else if (c >= '0' || c <= '9') {
+      // NOTE: Another bug. Using the OR sign (||) catches all, which make it so
+      // it never reaches the other conditions.
+      // } else if (c >= '0' || c <= '9') {
+    } else if (c >= '0' && c <= '9') {
       d++;
     } else if (strchr(".:,!?", c) != NULL) {
       // NOTE: This code logic doesn't make sense. It should be, if
       // p == 1 then return PWM_INVALID_PASSWORD, else p = 1. Otherwise it
       // will always return an Invalid password if we give a password with a
       // special character, which should be valid
-      if (p == 0) {
+      // if (p == 0) {
+      if (p == 1) {
         return PWM_INVALID_PASSWORD;
       } else {
         p = 1;
@@ -107,7 +118,8 @@ pwm_res_t pwm_is_valid_password(const char *password) {
       // character we don't know about make it instantly ok? It should return
       // PWM_INVALID_PASSWORD for having an invalid password
     } else {
-      return PWM_OK;
+      // return PWM_OK;
+      return PWM_INVALID_PASSWORD;
     }
   }
 
