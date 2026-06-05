@@ -1,0 +1,7 @@
+*.o
+*.gcno
+corrected_code/pwm
+gabriel_work/
+*/gtest/library/
+*.gcda
+*.gcov
